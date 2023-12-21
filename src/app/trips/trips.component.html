@@ -1,0 +1,17 @@
+<div *ngFor="let trip of tripsInfo" [ngClass]="{}" >
+  <div class="tripContent">
+    <h2>{{ trip.Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
+    <img [src]="trip.Image" alt="{{ trip.Name }}" width="20%" height="20%">
+    <p class="description">{{ trip.Description }}</p>
+    <p class="price">Price: {{ trip.Price | currency:'PLN ':'symbol':'1.2-2' }}</p>
+    <p class="avalPlaces">Ilość miejsc: {{ trip.MaxPlacesAvailable }} / {{ trip.MaxPlacesAvailable }}</p>
+    <div class="buttons">
+      <button class="delete" [disabled]="trip.IloscZarezerwowanychMiejsc === 0">-</button>
+      <button class="add" [disabled]="trip.MaxIloscMiejsc - trip.IloscZarezerwowanychMiejsc === 0">+</button>
+    </div>
+  </div>
+</div>
+
+<!--<div [ngStyle]="{'background-color': zarezerwowaneWycieczki > 10 ? 'green' : 'red'}">-->
+<!--  Sumaryczna ilość zarezerwowanych wycieczek: {{ zarezerwowaneWycieczki }}-->
+<!--</div>-->
