@@ -2,3 +2,15 @@
 body {
   background-color: #b8512e;
 }
+
+a {
+  color: aliceblue;
+}
+
+nav li {
+  margin-left: 50px;
+}
+
+nav li:hover {
+  transform: scale(1.4);
+}

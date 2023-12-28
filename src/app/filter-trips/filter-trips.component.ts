@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ReactiveFormsModule } from '@angular/forms';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-filter-trips',
@@ -9,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./filter-trips.component.css'],
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule, CommonModule
   ]
 })
 

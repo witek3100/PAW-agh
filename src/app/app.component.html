@@ -1,2 +1,31 @@
+<nav class="navbar navbar-expand-lg bg-primary">
+    <a class="navbar-brand" routerLink="/" ><span style="font-size: 30px; color: #faa809;"> FUNTRAVEL </span> <br> <span style="font-size: 15px;"> best travel agency </span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">About us<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/trips">Our offer</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/add-new-trip">Add new trip</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cart">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/history">History</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-<app-trips></app-trips>
+<main>
+  <router-outlet></router-outlet>
+</main>

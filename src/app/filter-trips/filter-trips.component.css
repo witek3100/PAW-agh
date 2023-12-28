@@ -1,12 +1,6 @@
 form {
-  background-color: rgba(3, 160, 250, 0.8);
-  padding: 20px;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  width: 250px;
-  margin-top: 50px;
-  margin-right: 50px;
 }
 
 label {

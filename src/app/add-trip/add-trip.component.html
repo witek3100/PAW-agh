@@ -1,0 +1,38 @@
+<div class="form-placeholder">
+  <h3>ADD NEW TRIP</h3>
+  <form [formGroup]="AddTripForm" (ngSubmit)="onSubmit()">
+    <label for="name">Name: </label>
+    <input type="text" id="name" formControlName="Name">
+    <span class="error" *ngIf="formErrors.Name" >{{ formErrors.Name }}</span>
+
+    <label for="country">Country: </label>
+    <input type="text" id="country" formControlName="Country">
+    <span class="error" *ngIf="formErrors.Country" >{{ formErrors.Country }}</span>
+
+    <label for="start-date">Start date: </label>
+    <input type="date" id="start-date" formControlName="StartDate">
+    <span class="error" *ngIf="formErrors.startDate" >{{ formErrors.startDate }}</span>
+
+    <label for="end-date">End date: </label>
+    <input type="date" id="end-date" formControlName="EndDate">
+    <span class="error" *ngIf="formErrors.endDate" >{{ formErrors.endDate }}</span>
+
+    <label for="price">Price: </label>
+    <input type="number" id="price" formControlName="Price">
+    <span class="error" *ngIf="formErrors.Price" >{{ formErrors.Price }}</span>
+
+    <label for="places-total">Places total: </label>
+    <input type="number" id="places-total" formControlName="PlacesTotal">
+    <span class="error" *ngIf="formErrors.PlacesTotal" >{{ formErrors.PlacesTotal }}</span>
+
+    <label for="places-reserved">Places reserved: </label>
+    <input type="number" id="places-reserved" formControlName="PlacesReserved">
+    <span class="error" *ngIf="formErrors.PlacesReserved" >{{ formErrors.PlacesReserved }}</span>
+
+    <label for="desc">Description: </label>
+    <input type="text" id="desc" formControlName="Description">
+    <span class="error" *ngIf="formErrors.Description" >{{ formErrors.Description }}</span>
+
+    <button type="submit" [disabled]="!AddTripForm.valid">Add</button>
+  </form>
+</div>
