@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from "@angular/common/http";
-import {TripsComponent} from "./trips/trips.component";
+import { TripsComponent } from "./trips/trips.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { FilterTripsComponent } from "./filter-trips/filter-trips.component";
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import {TripsComponent} from "./trips/trips.component";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FilterTripsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

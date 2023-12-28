@@ -5,7 +5,8 @@
     "StartDate": "2023-05-15",
     "EndDate": "2023-05-25",
     "Price": 2500,
-    "MaxPlacesAvailable": 15,
+    "PlacesReserved": 0,
+    "PlacesTotal": 15,
     "Description": "Explore the breathtaking beauty of the Swiss Alps with this adrenaline-packed adventure!",
     "Image": "/assets/images/alps.jpg"
   },
@@ -15,7 +16,8 @@
     "StartDate": "2023-06-10",
     "EndDate": "2023-06-20",
     "Price": 4500,
-    "MaxPlacesAvailable": 10,
+    "PlacesReserved": 11,
+    "PlacesTotal": 15,
     "Description": "Relax in luxury on the pristine beaches of the Maldives and experience true tropical bliss.",
     "Image": "/assets/images/maledives.jpg"
   },
@@ -25,7 +27,8 @@
     "StartDate": "2023-07-05",
     "EndDate": "2023-07-15",
     "Price": 3500,
-    "MaxPlacesAvailable": 20,
+    "PlacesReserved": 15,
+    "PlacesTotal": 15,
     "Description": "Immerse yourself in the rich cultural heritage of Kyoto, Japan, and witness the beauty of its ancient temples and gardens.",
     "Image": "/assets/images/kyoto.jpg"
   },
@@ -35,7 +38,8 @@
     "StartDate": "2023-08-01",
     "EndDate": "2023-08-10",
     "Price": 5000,
-    "MaxPlacesAvailable": 12,
+    "PlacesReserved": 10,
+    "PlacesTotal": 15,
     "Description": "Embark on a thrilling safari in the Serengeti National Park and witness the incredible wildlife of East Africa.",
     "Image": "/assets/images/serengeti.jpg"
   },
@@ -45,7 +49,8 @@
     "StartDate": "2023-09-10",
     "EndDate": "2023-09-20",
     "Price": 3000,
-    "MaxPlacesAvailable": 18,
+    "PlacesReserved": 10,
+    "PlacesTotal": 15,
     "Description": "Discover the ancient wonders of Rome, from the Colosseum to the Roman Forum, in this historical journey through time.",
     "Image": "/assets/images/rome.jpg"
   },
@@ -55,7 +60,8 @@
     "StartDate": "2023-10-05",
     "EndDate": "2023-10-15",
     "Price": 2800,
-    "MaxPlacesAvailable": 15,
+    "PlacesReserved": 5,
+    "PlacesTotal": 5,
     "Description": "Experience the stunning landscapes and natural wonders of Banff National Park in the heart of the Canadian Rockies.",
     "Image": "/assets/images/banff.jpg"
   },
@@ -65,7 +71,8 @@
     "StartDate": "2023-11-01",
     "EndDate": "2023-11-10",
     "Price": 3200,
-    "MaxPlacesAvailable": 22,
+    "PlacesReserved": 5,
+    "PlacesTotal": 25,
     "Description": "Indulge in the beauty of the Greek Islands with this island-hopping adventure, exploring the crystal-clear waters and ancient ruins.",
     "Image": "/assets/images/greece.jpg"
   },
@@ -75,7 +82,8 @@
     "StartDate": "2023-12-01",
     "EndDate": "2023-12-10",
     "Price": 4700,
-    "MaxPlacesAvailable": 14,
+    "PlacesReserved": 15,
+    "PlacesTotal": 15,
     "Description": "Embark on a challenging trek through the wilderness of Namibia and witness the rugged beauty of the African landscape.",
     "Image": "/assets/images/namibia.jpg"
   },
@@ -85,7 +93,8 @@
     "StartDate": "2024-01-15",
     "EndDate": "2024-01-25",
     "Price": 3800,
-    "MaxPlacesAvailable": 16,
+    "PlacesReserved": 1,
+    "PlacesTotal": 10,
     "Description": "Chase the mesmerizing Northern Lights in the Icelandic winter sky and experience the magic of the Arctic Circle.",
     "Image": "/assets/images/iceland.jpg"
   },
@@ -95,7 +104,8 @@
     "StartDate": "2024-02-10",
     "EndDate": "2024-02-20",
     "Price": 4200,
-    "MaxPlacesAvailable": 0,
+    "PlacesReserved": 0,
+    "PlacesTotal": 15,
     "Description": "Explore the incredible biodiversity of the Amazon Rainforest, discovering rare wildlife and lush landscapes.",
     "Image": "/assets/images/amazon.jpg"
   }

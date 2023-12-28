@@ -1,17 +1,74 @@
-<div *ngFor="let trip of tripsInfo" [ngClass]="{}" >
-  <div class="tripContent">
-    <h2>{{ trip.Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
-    <img [src]="trip.Image" alt="{{ trip.Name }}" width="20%" height="20%">
-    <p class="description">{{ trip.Description }}</p>
-    <p class="price">Price: {{ trip.Price | currency:'PLN ':'symbol':'1.2-2' }}</p>
-    <p class="avalPlaces">Ilość miejsc: {{ trip.MaxPlacesAvailable }} / {{ trip.MaxPlacesAvailable }}</p>
-    <div class="buttons">
-      <button class="delete" [disabled]="trip.IloscZarezerwowanychMiejsc === 0">-</button>
-      <button class="add" [disabled]="trip.MaxIloscMiejsc - trip.IloscZarezerwowanychMiejsc === 0">+</button>
+<div class="contentbox">
+  <app-filter-trips (filterChanged)="filterTrips($event)"></app-filter-trips>
+  <div>
+    <div *ngFor="let trip of trips; let i = index" [ngClass]="{}" >
+      <div class="tripContent" [ngStyle]="getBorderStyle(trip)">
+        <h2>{{ trips[i].Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
+        <img [src]="trip.Image" alt="{{ trip.Name }}" width="20%" height="20%">
+        <p class="description">{{ trip.Description }}</p>
+        <p class="price">Price: {{ trip.Price | currency }}</p>
+
+        <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 5; else med">
+          <p class="avalPlaces">WOLNE MIEJSCA: {{ trip.PlacesTotal - trip.PlacesReserved }}</p>
+          <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+        </ng-container>
+        <ng-template #med>
+          <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 0 ; else low">
+            <p class="avalPlaces" style="color: #b84724">TYLKO {{ trip.PlacesTotal - trip.PlacesReserved }} WOLNE MIEJSCA</p>
+            <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+          </ng-container>
+          <ng-template #low>
+            <p class="avalPlaces" style="color: red">BRAK WOLNYCH MIEJSC</p>
+            <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+          </ng-template>
+        </ng-template>
+
+        <div class="buttons">
+          <button class="add" [ngStyle]="{'display': trip.PlacesTotal - trip.PlacesReserved > 0 ? 'block' : 'none'}">Add to cart</button>
+          <button class="delete" [disabled]="trip.PlacesReserved === 0">Remove from cart</button>
+        </div>
+        <button class="remove-trip" (click)="deleteTrip(i)">Delete trip</button>
+      </div>
+    </div>
+
+    <div class="form-placeholder">
+      <h3>ADD NEW TRIP</h3>
+      <form [formGroup]="AddTripForm" (ngSubmit)="onSubmit()">
+        <label for="name">Name: </label>
+        <input type="text" id="name" formControlName="Name">
+        <span class="error" *ngIf="formErrors.Name" >{{ formErrors.Name }}</span>
+
+        <label for="country">Country: </label>
+        <input type="text" id="country" formControlName="Country">
+        <span class="error" *ngIf="formErrors.Country" >{{ formErrors.Country }}</span>
+
+        <label for="start-date">Start date: </label>
+        <input type="date" id="start-date" formControlName="StartDate">
+        <span class="error" *ngIf="formErrors.startDate" >{{ formErrors.startDate }}</span>
+
+        <label for="end-date">End date: </label>
+        <input type="date" id="end-date" formControlName="EndDate">
+        <span class="error" *ngIf="formErrors.endDate" >{{ formErrors.endDate }}</span>
+
+        <label for="price">Price: </label>
+        <input type="number" id="price" formControlName="Price">
+        <span class="error" *ngIf="formErrors.Price" >{{ formErrors.Price }}</span>
+
+        <label for="places-total">Places total: </label>
+        <input type="number" id="places-total" formControlName="PlacesTotal">
+        <span class="error" *ngIf="formErrors.PlacesTotal" >{{ formErrors.PlacesTotal }}</span>
+
+        <label for="places-reserved">Places reserved: </label>
+        <input type="number" id="places-reserved" formControlName="PlacesReserved">
+        <span class="error" *ngIf="formErrors.PlacesReserved" >{{ formErrors.PlacesReserved }}</span>
+
+        <label for="desc">Description: </label>
+        <input type="text" id="desc" formControlName="Description">
+        <span class="error" *ngIf="formErrors.Description" >{{ formErrors.Description }}</span>
+
+        <button type="submit" [disabled]="!AddTripForm.valid">Add</button>
+      </form>
     </div>
   </div>
 </div>
 
-<!--<div [ngStyle]="{'background-color': zarezerwowaneWycieczki > 10 ? 'green' : 'red'}">-->
-<!--  Sumaryczna ilość zarezerwowanych wycieczek: {{ zarezerwowaneWycieczki }}-->
-<!--</div>-->
