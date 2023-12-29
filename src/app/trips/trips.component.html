@@ -4,9 +4,9 @@
     <button class="filterbutton" (click)="filterTrips($event)">SHOW</button>
   </div>
   <div>
-    <div *ngFor="let trip of trips; let i = index" [ngClass]="{}" >
+    <div *ngFor="let trip of trips" [ngClass]="{}" >
       <div class="tripContent" [ngStyle]="getBorderStyle(trip)">
-        <h2>{{ trips[i].Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
+        <h2>{{ trip.Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
         <img [src]="trip.Image" alt="{{ trip.Name }}" width="20%" height="20%">
         <p class="description">{{ trip.Description }}</p>
         <p class="price">Price: {{ trip.Price | currency }}</p>
@@ -30,7 +30,7 @@
           <button class="add" [ngStyle]="{'display': trip.PlacesTotal - trip.PlacesReserved > 0 ? 'block' : 'none'}">Add to cart</button>
           <button class="delete" [disabled]="trip.PlacesReserved === 0">Remove from cart</button>
         </div>
-        <button class="remove-trip" (click)="deleteTrip({{ trip.id }})">Delete trip</button>
+        <button class="remove-trip" (click)="deleteTrip(trip.id)">Delete trip</button>
       </div>
     </div>
 

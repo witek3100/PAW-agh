@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Trip} from "../trip.model";
-import {LoadTripsService} from "../trips/load_trips.service";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-trip',
@@ -54,7 +53,7 @@ export class AddTripComponent implements OnInit {
     }
   }
 
-  public constructor(private db: AngularFirestore, private fb: FormBuilder) {}
+  public constructor(private db: AngularFirestore, private fb: FormBuilder, private router: Router) {}
 
   public ngOnInit(): void {
     const url: string = '/assets/trips.json';
@@ -96,8 +95,9 @@ export class AddTripComponent implements OnInit {
   onSubmit(): void {
     if (this.AddTripForm.valid) {
       const formData = { ...this.AddTripForm.value };
-      this.db.collection('Trips').add({ ...formData });
-      this.AddTripForm.reset();
+      this.db.collection('Trips').add({ ...formData }).then(() => {
+        this.router.navigate(['/trips']);
+      });
     }
   }
 }

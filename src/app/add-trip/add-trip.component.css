@@ -1,38 +1,11 @@
-.form-placeholder {
-  margin: auto;
-  background-color: rgba(3, 160, 250, 0.8);
-  border-radius: 20px;
-  width: 600px;
-  padding: 30px;
+.card {
+  background-color: rgba(3, 160, 250, 0.7);;
 }
 
-.form-placeholder h3 {
-  color: aliceblue;
+.card-title {
+  color: white;
 }
 
-.form-placeholder label {
-  color: aliceblue;
-}
-
-.form-placeholder button {
-  width: 40%;
-  margin: auto;
-}
-
-.form-placeholder input {
-  background-color: rgba(3, 120, 220, 0.1);
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.error {
-  font-size: 12px;
-  font-weight: bold;
-  color: #b81954;
-  margin-bottom: 10px;
+label {
+  color: #fff;
 }
