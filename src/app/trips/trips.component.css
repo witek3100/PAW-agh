@@ -75,14 +75,24 @@ h2 {
 }
 
 .filters {
-  background-color: rgba(3, 160, 250, 0.8);
-  padding: 20px;
-  border-radius: 10px;
   margin-top: 50px;
   width: 300px;
-  height: 700px;
+  height: 840px;
   margin-left: -100px;
   margin-right: 50px;
   flex-shrink: 0;
+  background-color: rgba(3, 160, 250, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.filters button {
+  color: white;
+  background-color: #e0ab4c;
+  border-radius: 5px;
+}
+
+.filters button:hover {
+  transform: scale(1.3);
 }
 

@@ -1,27 +1,42 @@
 <form [formGroup]="filterForm">
-  <label for="lokalizacja">Country:</label>
-  <select id="lokalizacja" formControlName="location" multiple>
-    <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
-  </select>
 
-  <label for="priceFrom">Price From:</label>
-  <input type="number" id="priceFrom" formControlName="priceFrom">
+  <div class="form-group">
+    <label for="lokalizacja">Country:</label>
+    <select id="lokalizacja" formControlName="location" class="form-control" multiple>
+      <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+    </select>
+  </div>
 
-  <label for="priceFrom">Price To:</label>
-  <input type="number" id="priceTo" formControlName="priceTo">
+  <div class="form-group">
+    <label for="rating">Rating:</label>
+    <select id="rating" formControlName="rating" class="form-control" multiple>
+      <option value="1">1 gwiazdka</option>
+      <option value="2">2 gwiazdki</option>
+      <option value="3">3 gwiazdki</option>
+      <option value="4">4 gwiazdki</option>
+      <option value="5">5 gwiazdek</option>
+    </select>
+  </div>
 
-  <label for="dataFrom">End date:</label>
-  <input type="date" id="dataFrom" formControlName="dateFrom">
+  <div class="form-group">
+    <label for="priceFrom">Price From:</label>
+    <input type="number" id="priceFrom" formControlName="priceFrom" class="form-control">
+  </div>
 
-  <label for="dateTo">Start date:</label>
-  <input type="date" id="dateTo" formControlName="dateTo">
+  <div class="form-group">
+    <label for="priceTo">Price To:</label>
+    <input type="number" id="priceTo" formControlName="priceTo" class="form-control">
+  </div>
 
-  <label for="rating">Rating:</label>
-  <select id="rating" formControlName="rating" multiple>
-    <option value="1">1 gwiazdka</option>
-    <option value="2">2 gwiazdki</option>
-    <option value="3">3 gwiazdki</option>
-    <option value="4">4 gwiazdki</option>
-    <option value="5">5 gwiazdek</option>
-  </select>
+  <div class="form-group">
+    <label for="dateFrom">End date:</label>
+    <input type="date" id="dateFrom" formControlName="dateFrom" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="dateTo">Start date:</label>
+    <input type="date" id="dateTo" formControlName="dateTo" class="form-control">
+  </div>
+
 </form>
+

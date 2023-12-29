@@ -30,7 +30,7 @@
           <button class="add" [ngStyle]="{'display': trip.PlacesTotal - trip.PlacesReserved > 0 ? 'block' : 'none'}">Add to cart</button>
           <button class="delete" [disabled]="trip.PlacesReserved === 0">Remove from cart</button>
         </div>
-        <button class="remove-trip" (click)="deleteTrip(i)">Delete trip</button>
+        <button class="remove-trip" (click)="deleteTrip({{ trip.id }})">Delete trip</button>
       </div>
     </div>
 

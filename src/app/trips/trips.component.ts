@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Trip } from '../trip.model'
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { LoadTripsService } from './load_trips.service';
-
+import {Observable} from "rxjs";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-trips',
@@ -11,15 +11,19 @@ import { LoadTripsService } from './load_trips.service';
 })
 
 export class TripsComponent implements OnInit {
-  public trips: Trip[] = [];
+  public trips: any[] = [];
 
-  public constructor(private loadTripsService: LoadTripsService, private fb: FormBuilder) {}
+  public constructor(private db: AngularFirestore, private fb: FormBuilder) {}
   public ngOnInit(): void {
-    const url: string = '/assets/trips.json';
-
-    this.loadTripsService.getTrips().subscribe((trips: Trip[]) => {
-      this.trips = trips;
+    this.db.collection('Trips').get().subscribe((ss) => {
+      ss.docs.forEach((doc) => {
+        const trip = doc.data() as {};
+        Object.assign(trip, {'id': doc.id})
+        console.log(trip)
+        this.trips.push(doc.data())
+      })
     })
+
   }
 
   getBorderStyle(trip: Trip): { [key: string]: string } {
@@ -30,34 +34,37 @@ export class TripsComponent implements OnInit {
     } else {
       return {};
     }
+    return {};
   }
 
-  deleteTrip(index: number): void {
+  deleteTrip(id: string): void {
     if (confirm('Are you sure you want to delete this trip?')) {
-      this.trips.splice(index, 1);
+
     }
   }
 
   filterTrips(filter: any): void {
-    this.trips = this.trips.filter((trip) => {
-      const price = trip.Price >= filter.priceFrom
-        && trip.Price <= filter.priceTo;
-
-      const date = new Date(trip.StartDate) >= filter.dateFrom
-        && new Date(trip.EndDate) <= filter.dateTo;
-
-      const rating = !filter.rating
-        || filter.rating.length === 0
-        || filter.rating.includes(trip.Rating);
-
-      const location = !filter.location
-        || filter.location.length === 0
-        || filter.location.includes(trip.Country);
-
-      console.log(filter)
-      return price && date && rating && location;
-    })
+    // this.trips = this.trips.filter((trip) => {
+    //   const price = trip.Price >= filter.priceFrom
+    //     && trip.Price <= filter.priceTo;
+    //
+    //   const date = new Date(trip.StartDate) >= filter.dateFrom
+    //     && new Date(trip.EndDate) <= filter.dateTo;
+    //
+    //   const rating = !filter.rating
+    //     || filter.rating.length === 0
+    //     || filter.rating.includes(trip.Rating);
+    //
+    //   const location = !filter.location
+    //     || filter.location.length === 0
+    //     || filter.location.includes(trip.Country);
+    //
+    //   console.log(filter)
+    //   return price && date && rating && location;
+    // })
   }
+
+  protected readonly document = document;
 }
 
 
