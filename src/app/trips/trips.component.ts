@@ -57,6 +57,7 @@ export class TripsComponent implements OnInit {
   applyFilter(filter: any) {
 
     this.filteredTrips = [...this.trips]
+    this.currentPage = 1;
 
     if (filter.country) {
       this.filteredTrips = this.filteredTrips.filter(trip => trip['Country'] === filter.country)
