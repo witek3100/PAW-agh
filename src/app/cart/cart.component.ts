@@ -3,6 +3,7 @@ import { AngularFirestore } from "@angular/fire/compat/firestore";
 import {CartItem} from "../cart-item.model";
 import {Trip} from "../trip.model";
 import {Router} from "@angular/router";
+import {flush} from "@angular/core/testing";
 
 @Component({
   selector: 'app-cart',
@@ -20,24 +21,25 @@ export class CartComponent implements OnInit {
       ss.docs.forEach((doc) => {
         const cartItem = doc.data() as CartItem;
 
-        this.db.collection('Trips').get().subscribe((ss) => {
-          ss.docs.forEach((doct) => {
-            const trip = doct.data() as Trip;
-            if (doct.id === cartItem.TripID) {
-              const item = {
-                'TripID': doct.id,
-                'CartItemID': doc.id,
-                'Amount': cartItem.Amount,
-                'Name': trip.Name,
-                'Country': trip.Country,
-                'Price': trip.Price,
-                'StartDate': trip.StartDate
+        if (cartItem.Active) {
+          this.db.collection('Trips').get().subscribe((ss) => {
+            ss.docs.forEach((doct) => {
+              const trip = doct.data() as Trip;
+              if (doct.id === cartItem.TripID) {
+                const item = {
+                  'TripID': doct.id,
+                  'CartItemID': doc.id,
+                  'Amount': cartItem.Amount,
+                  'Name': trip.Name,
+                  'Country': trip.Country,
+                  'Price': trip.Price,
+                  'StartDate': trip.StartDate
+                }
+                this.cartItems.push(item)
               }
-              this.cartItems.push(item)
-            }
-
+            })
           })
-        })
+        }
 
       })
     })
@@ -68,7 +70,19 @@ export class CartComponent implements OnInit {
   }
 
   buy() {
+    if (confirm('Are you sure you want buy cart contents?')) {
+      var ids = this.cartItems.map((item) => item.CartItemID)
+      this.db.collection('OrdersHistory').add({
+        'CartItems': ids,
+        'Date': new Date()
+      })
 
+      for (var i = 0; i < ids.length; i++) {
+        this.db.collection('CartItems').doc(ids[i]).update({'Active': false}).then(() => {
+          this.router.navigate(['/history'])
+        })
+      }
+    }
   }
 
 }

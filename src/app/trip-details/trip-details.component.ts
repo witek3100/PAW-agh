@@ -118,7 +118,7 @@ export class TripDetailsComponent implements OnInit {
     this.db.collection('CartItems').get().subscribe((ss) => {
       ss.docs.forEach((doc) => {
         const item = doc.data() as CartItem;
-        if (item.TripID === id) {
+        if (item.TripID === id && item.Active) {
           cartid = doc.id;
           exists = true
           new_amount = item.Amount + 1
@@ -133,7 +133,8 @@ export class TripDetailsComponent implements OnInit {
         this.db.collection('CartItems').add({
           'TripID': id,
           'UserID': '',
-          'Amount': 1
+          'Amount': 1,
+          'Active': true,
         })
       }
 

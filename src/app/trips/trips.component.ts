@@ -65,11 +65,11 @@ export class TripsComponent implements OnInit {
     }
 
     if (filter.priceMin) {
-      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] > filter.priceMin)
+      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] >= filter.priceMin)
     }
 
     if (filter.priceMax) {
-      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] < filter.priceMax)
+      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] <= filter.priceMax)
     }
   }
 

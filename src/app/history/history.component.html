@@ -1,0 +1,10 @@
+<div class="history">
+  <h1>Your previous reservations</h1>
+  <div class="order" *ngFor="let order of orders">
+    <span class="orderid">Order ID: {{ order.ID }} <span style="float: right">{{ order.Date }}</span></span>
+    <div style="margin-top: 10px;">Reserved trips:</div>
+    <div *ngFor="let trip of order.Trips">
+      <div class="trip" [routerLink]="['/trip-details', trip]">Trip ID: {{ trip }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.history {
+  background-color: rgba(3, 160, 250, 0.9);
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order {
+  background-color: rgba(0, 180, 200, 1);
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.orderid {
+  padding: 10px;
+  background-color: #b84724;
+  border-radius: 10px;
+}
+
+.trip {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #b87e40;
+  border-radius: 5px;
+}
+
+.trip:hover {
+  transform: scale(1.1);
+}
