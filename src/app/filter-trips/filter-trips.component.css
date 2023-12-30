@@ -1,13 +1,10 @@
-form {
+.row {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  border-radius: 10px;
 }
 
 label {
+  color: white;
   margin-top: 20px;
-}
-
-input {
-  background-color: rgba(3, 160, 250, 0.1);
 }

@@ -3,6 +3,7 @@ import { Trip } from '../trip.model'
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Router } from '@angular/router';
+import { FilterTripsComponent } from "../filter-trips/filter-trips.component";
 
 
 @Component({
@@ -13,6 +14,11 @@ import { Router } from '@angular/router';
 
 export class TripsComponent implements OnInit {
   public trips: any[] = [];
+  public filteredTrips: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 3;
+
+  filterForm: FormGroup;
 
   public constructor(private db: AngularFirestore, private fb: FormBuilder, private router: Router) {}
   public ngOnInit(): void {
@@ -22,8 +28,8 @@ export class TripsComponent implements OnInit {
         Object.assign(trip, {'id': doc.id})
         this.trips.push(trip)
       })
+      this.filteredTrips = [...this.trips]
     })
-
   }
 
   getBorderStyle(trip: Trip): { [key: string]: string } {
@@ -46,28 +52,48 @@ export class TripsComponent implements OnInit {
     }
   }
 
-  filterTrips(filter: any): void {
-    // this.trips = this.trips.filter((trip) => {
-    //   const price = trip.Price >= filter.priceFrom
-    //     && trip.Price <= filter.priceTo;
-    //
-    //   const date = new Date(trip.StartDate) >= filter.dateFrom
-    //     && new Date(trip.EndDate) <= filter.dateTo;
-    //
-    //   const rating = !filter.rating
-    //     || filter.rating.length === 0
-    //     || filter.rating.includes(trip.Rating);
-    //
-    //   const location = !filter.location
-    //     || filter.location.length === 0
-    //     || filter.location.includes(trip.Country);
-    //
-    //   console.log(filter)
-    //   return price && date && rating && location;
-    // })
+  protected readonly document = document;
+
+  applyFilter(filter: any) {
+
+    this.filteredTrips = [...this.trips]
+
+    if (filter.country) {
+      this.filteredTrips = this.filteredTrips.filter(trip => trip['Country'] === filter.country)
+    }
+
+    if (filter.startDate) {
+      const startDateFilter = new Date(filter.startDate)
+      this.filteredTrips = this.filteredTrips.filter(trip => new Date(trip['StartDate']) >= startDateFilter)
+    }
+
+    if (filter.endDate) {
+      const endDateFilter = new Date(filter.endDate)
+      this.filteredTrips = this.filteredTrips.filter(trip => new Date(trip['EndDate']) <= endDateFilter)
+    }
+
+    if (filter.priceMin) {
+      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] > filter.priceMin)
+    }
+
+    if (filter.priceMax) {
+      this.filteredTrips = this.filteredTrips.filter(trip => trip['Price'] < filter.priceMax)
+    }
   }
 
-  protected readonly document = document;
+  get fTrips(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredTrips.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+  }
+
+  getPageNumbers(): number[] {
+    const totalPages = Math.ceil(this.filteredTrips.length / this.itemsPerPage);
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
 }
 
 

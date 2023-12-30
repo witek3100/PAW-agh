@@ -1,0 +1,146 @@
+.tripContent {
+  background-color: rgba(3, 160, 250, 0.9);
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.country {
+  font-size: 35px;
+  color: #b84724;
+  font-weight: bold;
+}
+
+.description {
+  margin-top: 70px;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+
+.back {
+  padding: 10px;
+  border-radius: 5px;
+  float: left;
+  background-color: #b84724;
+  color: white;
+  text-decoration: none;
+}
+
+.back:hover {
+  transform: scale(1.2);
+}
+
+.price {
+  background-color: #b84724;
+  padding: 20px 80px 20px 80px;
+  border-radius: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  margin: 30px;
+}
+
+.addToCart {
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: #397f2e;
+}
+
+.addToCart:hover {
+  transform: scale(1.2);
+}
+
+.removeTrip {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: red;
+}
+
+.removeTrip:hover {
+  transform: scale(1.2);
+}
+
+.avalPlaces {
+  color: aliceblue;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+img {
+  border-radius: 15px;
+}
+
+img:hover {
+  transform: scale(1.3);
+}
+
+#image2 {
+  margin-left: -130px;
+  margin-top: 150px;
+}
+
+#image3 {
+  margin-left: -130px;
+}
+
+iframe {
+  width: 500px;
+  height: 300px;
+  border-radius: 20px;
+}
+
+@media (max-width: 1450px) {
+  .images {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #image1 {
+    transform: scale(0.7);
+  }
+
+  #image2 {
+    transform: scale(0.7);
+  }
+
+  #image3 {
+    transform: scale(0.7);
+  }
+
+  #image2 {
+    margin: auto;
+  }
+
+  #image3 {
+    margin: auto;
+  }
+}
+
+.review {
+  width: 60%;
+  margin: auto;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: rgba(3, 160, 250, 1);
+}
+
+.review .nick {
+  font-weight: bold;
+  color: #b84724;
+  font-size: 20px;
+}
+
+.review .title {
+  font-size: 27px;
+  font-weight: bold;
+}
+

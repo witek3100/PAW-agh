@@ -1,37 +1,42 @@
 <div class="contentbox">
   <div class="filters">
-    <app-filter-trips></app-filter-trips>
-    <button class="filterbutton" (click)="filterTrips($event)">SHOW</button>
+    <div>
+      <app-filter-trips (filterChange)="applyFilter($event)"></app-filter-trips>
+    </div>
   </div>
   <div>
-    <div *ngFor="let trip of trips" [ngClass]="{}" >
-      <div class="tripContent" [ngStyle]="getBorderStyle(trip)">
+    <div *ngFor="let trip of fTrips" [ngClass]="{}" >
+      <a class="tripContent" [ngStyle]="getBorderStyle(trip)" [routerLink]="['/trip-details', trip.id]">
         <h2>{{ trip.Name | uppercase }} - {{ trip.Country | uppercase }}</h2>
-        <img [src]="trip.Image" alt="{{ trip.Name }}" width="20%" height="20%">
         <p class="description">{{ trip.Description }}</p>
         <p class="price">Price: {{ trip.Price | currency }}</p>
 
         <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 5; else med">
-          <p class="avalPlaces">WOLNE MIEJSCA: {{ trip.PlacesTotal - trip.PlacesReserved }}</p>
-          <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+          <p class="avalPlaces">{{ trip.PlacesTotal - trip.PlacesReserved }} PLACES AVAILABLE</p>
+          <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
         </ng-container>
         <ng-template #med>
           <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 0 ; else low">
-            <p class="avalPlaces" style="color: #b84724">TYLKO {{ trip.PlacesTotal - trip.PlacesReserved }} WOLNE MIEJSCA</p>
-            <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+            <p class="avalPlaces" style="color: #b84724">ONLY {{ trip.PlacesTotal - trip.PlacesReserved }} PLACES AVAILABLE</p>
+            <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
           </ng-container>
           <ng-template #low>
-            <p class="avalPlaces" style="color: red">BRAK WOLNYCH MIEJSC</p>
-            <p style="color: aliceblue;">Lączna ilość miejsc: {{ trip.PlacesTotal }}</p>
+            <p class="avalPlaces" style="color: red">There are no places available for this trip</p>
+            <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
           </ng-template>
         </ng-template>
+      </a>
+    </div>
 
-        <div class="buttons">
-          <button class="add" [ngStyle]="{'display': trip.PlacesTotal - trip.PlacesReserved > 0 ? 'block' : 'none'}">Add to cart</button>
-          <button class="delete" [disabled]="trip.PlacesReserved === 0">Remove from cart</button>
+    <div class="pagination">
+      <button *ngFor="let page of getPageNumbers()" (click)="onPageChange(page)">
+        <div *ngIf="page === currentPage; else elseBlock">
+          <span style="color: white">{{ page }}</span>
         </div>
-        <button class="remove-trip" (click)="deleteTrip(trip.id)">Delete trip</button>
-      </div>
+        <ng-template #elseBlock>
+          <span style="color: #fff;">{{ page }}</span>
+        </ng-template>
+      </button>
     </div>
 
   </div>

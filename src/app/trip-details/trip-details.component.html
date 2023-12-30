@@ -1,0 +1,96 @@
+<div class="tripContent">
+  <div style="width: 100%">
+    <a class="back" routerLink="/trips">Back</a>
+  </div>
+  <h1>{{ trip.Name }}</h1>
+
+  <span class="country">{{ trip.Country }}</span>
+
+  <div class="images">
+    <img id="image1" src="{{ trip.Image1 }}" width="450" height="300">
+    <img id="image2" src="{{ trip.Image2 }}" width="450" height="300">
+    <img id="image3" src="{{ trip.Image3 }}" width="450" height="300">
+  </div>
+
+  <span class="description">{{ trip.Description }}</span>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d804962.9825264062!2d23.079102627358388!3d37.9914409104424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd1f067043f1%3A0x2736354576668ddd!2sAteny%2C%20Grecja!5e0!3m2!1spl!2spl!4v1703889409945!5m2!1spl!2spl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <span class="price">$ {{ trip.Price }}</span>
+
+  <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 5; else med">
+    <p class="avalPlaces">{{ trip.PlacesTotal - trip.PlacesReserved }} PLACES AVAILABLE</p>
+    <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
+  </ng-container>
+  <ng-template #med>
+    <ng-container *ngIf="trip.PlacesTotal - trip.PlacesReserved > 0 ; else low">
+      <p class="avalPlaces" style="color: #b84724">ONLY {{ trip.PlacesTotal - trip.PlacesReserved }} PLACES AVAILABLE</p>
+      <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
+    </ng-container>
+    <ng-template #low>
+      <p class="avalPlaces" style="color: red">There are no places available for this trip</p>
+      <p style="color: aliceblue;">Total places: {{ trip.PlacesTotal }}</p>
+    </ng-template>
+  </ng-template>
+
+  <button class="addToCart">Add to cart</button>
+  <button class="removeTrip">Remove trip</button>
+
+
+  <h2 style="margin-top: 70px;">Reviews</h2>
+  <div style="width: 100%;" *ngFor="let review of reviews" [ngClass]="{}">
+    <div class="review">
+      <div class="title">
+        {{ review.Title }}
+      </div>
+      <div class="nick">
+        {{ review.Nick }}
+      </div>
+      <div class="reviewContent">
+        {{ review.Content }}
+      </div>
+    </div><br>
+  </div>
+
+  <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card" style="background-color: rgba(3, 160, 250, 0.7);">
+        <div class="card-body">
+          <h3 class="card-title text-center">ADD REVIEW</h3>
+            <form [formGroup]="AddReviewForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="name" class="form-label">Nick:</label>
+                <input type="text" class="form-control" id="name" formControlName="Nick">
+                <span class="error" *ngIf="formErrors.Nick" style="color: red">{{ formErrors.Nick }}</span>
+              </div>
+
+              <div class="mb-3">
+                <label for="country" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="country" formControlName="Title">
+                <span class="error" *ngIf="formErrors.Title" style="color: red">{{ formErrors.Title }}</span>
+              </div>
+
+              <div class="mb-3">
+                <label for="start-date" class="form-label">Content:</label>
+                <textarea class="form-control" id="start-date" formControlName="Content" rows="5"></textarea>
+                <span class="error" *ngIf="formErrors.Content" style="color: red">{{ formErrors.Content }}</span>
+              </div>
+
+              <div class="mb-3">
+                <label for="end-date" class="form-label">Trip date:</label>
+                <input type="date" class="form-control" id="end-date" formControlName="EndDate">
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="!AddReviewForm.valid">Add</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

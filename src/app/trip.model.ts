@@ -8,6 +8,8 @@ export interface Trip {
   PlacesTotal: number;
   PlacesReserved: number;
   Description: string;
-  Image: string
+  Image1: string
+  Image2: string
+  Image3: string
   Rating: number
 }

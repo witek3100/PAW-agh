@@ -5,13 +5,15 @@ import { TripsComponent} from "./trips/trips.component";
 import {AddTripComponent} from "./add-trip/add-trip.component";
 import {CartComponent} from "./cart/cart.component";
 import {HistoryComponent} from "./history/history.component";
+import {TripDetailsComponent} from "./trip-details/trip-details.component";
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'trips', component: TripsComponent },
   { path: 'add-new-trip', component: AddTripComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'history', component: HistoryComponent}
+  { path: 'history', component: HistoryComponent },
+  { path: 'trip-details/:id', component: TripDetailsComponent }
 ];
 
 @NgModule({

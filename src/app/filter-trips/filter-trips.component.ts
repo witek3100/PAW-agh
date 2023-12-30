@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ReactiveFormsModule } from '@angular/forms';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from "@angular/common";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 @Component({
   selector: 'app-filter-trips',
@@ -15,45 +15,40 @@ import {CommonModule} from "@angular/common";
 })
 
 export class FilterTripsComponent implements OnInit {
-  @Output() filterChanged = new EventEmitter<any>();
-
+  @Output() filterChange: EventEmitter<any> = new EventEmitter();
+  @Input() availableCountries: string[] = [];
   filterForm: FormGroup;
+  maxPrice: number;
 
-  locations = ['Poland', 'France', 'Belgium']
+  constructor(private fb: FormBuilder, private db: AngularFirestore,) {}
 
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.filterForm = this.fb.group({
-      location: [],
-      priceFrom: [],
-      priceTo: [],
-      dateFrom: [],
-      dateTo: [],
-      rating: []
-    })
-    this.handleFilters();
-  }
 
-  handleFilters(): void {
-    this.filterForm.valueChanges.pipe(
-      startWith(this.filterForm.value),
-      map((value) => this.mapFilter(value)),
-      distinctUntilChanged(),
-    ).subscribe((filtered) => {
-      this.filterChanged.emit(filtered);
+    this.maxPrice = 0
+
+    this.db.collection('Trips').get().subscribe((ss) => {
+      ss.docs.forEach((doc) => {
+        const data = doc.data() as {};
+        this.availableCountries.push(data['Country' as keyof typeof data]);
+
+        var price = data['Price' as keyof typeof data]
+        if (price > this.maxPrice) {
+          this.maxPrice = price
+        }
+      })
+    })
+
+    this.filterForm = this.fb.group({
+      country: [''],
+      startDate: [''],
+      endDate: [''],
+      priceMin: [0],
+      priceMax: [0]
     });
   }
 
-  mapFilter(filteredValues: any): any {
-    return {
-      location: filteredValues.location || [],
-      priceFrom: filteredValues.priceFrom || 0,
-      priceTo: filteredValues.priceTo || 1000,
-      dateFrom: filteredValues.dateFrom || new Date(0),
-      dateTo: filteredValues.dateTo || new Date(Number.MAX_SAFE_INTEGER),
-      rating: filteredValues.rating || []
-    }
+  applyFilter() {
+    this.filterChange.emit(this.filterForm.value);
   }
-
 }
