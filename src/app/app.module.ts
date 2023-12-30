@@ -13,11 +13,12 @@ import { HistoryComponent } from './history/history.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from "@angular/fire/compat";
 import { TripDetailsComponent } from './trip-details/trip-details.component';
+import { SafePipe } from './safe.pipe';
 
 
 @NgModule({
   declarations: [
-    AppComponent, TripsComponent, LandingPageComponent, AddTripComponent, CartComponent, HistoryComponent, TripDetailsComponent
+    AppComponent, TripsComponent, LandingPageComponent, AddTripComponent, CartComponent, HistoryComponent, TripDetailsComponent, SafePipe
   ],
   imports: [
     BrowserModule,

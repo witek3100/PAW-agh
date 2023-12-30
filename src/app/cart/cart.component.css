@@ -1,0 +1,93 @@
+
+.cart {
+  border-radius: 15px;
+  background-color: rgba(0, 160, 250, 0.7);
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 20px;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.trip {
+  width: 100%;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: rgba(0, 180, 200, 1);
+  text-decoration: none;
+  margin-right: 30px;
+}
+
+.trip:hover {
+  transform: scale(1.1);
+}
+
+.name {
+  color: white;
+  font-size: 20px;
+  margin-right: 30px;
+}
+
+.country {
+  color: #b87e40;
+  font-weight: bold;
+  font-size: 25px;
+  margin-right: 30px;
+}
+
+.price {
+  color: #b84724;
+  font-weight: bold;
+  font-size: 25px;
+  margin-right: 30px;
+}
+
+.date {
+  color: white;
+}
+
+.amountbutton {
+  margin: 10px;
+  color: white;
+  background-color: #e0ab4c;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.amountbutton:hover {
+  transform: scale(1.2);
+}
+
+.amount {
+  color: white;
+  margin-top: 5px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+h2 {
+  color: #b8512e;
+  margin-top: 30px;
+}
+
+.buy {
+  padding: 10px 30px 10px 30px;
+  background-color: #b84724;
+  color: white;
+  border-radius: 5px;
+}
+
+.buy:hover {
+  transform: scale(1.1);
+}

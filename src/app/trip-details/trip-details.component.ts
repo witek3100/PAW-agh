@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {Trip} from "../trip.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Review} from "../review.model";
+import { DomSanitizer } from '@angular/platform-browser';
+import {CartItem} from "../cart-item.model";
+
 
 @Component({
   selector: 'app-trip-details',
@@ -36,7 +39,7 @@ export class TripDetailsComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private db: AngularFirestore, private route: ActivatedRoute) {}
+  constructor(private fb: FormBuilder, private db: AngularFirestore, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -69,7 +72,6 @@ export class TripDetailsComponent implements OnInit {
       })
     })
 
-    console.log(this.reviews)
   }
 
   onControlValueChanged() {
@@ -97,4 +99,48 @@ export class TripDetailsComponent implements OnInit {
       })
     }
   }
+
+  deleteTrip(id: string): void {
+    if (confirm('Are you sure you want to delete this trip?')) {
+      this.db.collection('Trips').doc(id).delete().then(
+        () => {
+          this.router.navigate(['/trips'])
+        });
+    }
+  }
+
+  addToCart(id: string): void {
+
+    var exists = false;
+    var new_amount: number = 0;
+    var cartid: string = '';
+
+    this.db.collection('CartItems').get().subscribe((ss) => {
+      ss.docs.forEach((doc) => {
+        const item = doc.data() as CartItem;
+        if (item.TripID === id) {
+          cartid = doc.id;
+          exists = true
+          new_amount = item.Amount + 1
+        }
+      })
+
+      if (exists) {
+        this.db.collection('CartItems').doc(cartid).update({
+          'Amount': new_amount
+        })
+      } else {
+        this.db.collection('CartItems').add({
+          'TripID': id,
+          'UserID': '',
+          'Amount': 1
+        })
+      }
+
+      this.router.navigate(['/cart'])
+    })
+  }
+
+
 }
+

@@ -43,15 +43,6 @@ export class TripsComponent implements OnInit {
     return {};
   }
 
-  deleteTrip(id: string): void {
-    if (confirm('Are you sure you want to delete this trip?')) {
-      this.db.collection('Trips').doc(id).delete().then(
-        () => {
-          location.reload();
-        });
-    }
-  }
-
   protected readonly document = document;
 
   applyFilter(filter: any) {

@@ -144,3 +144,14 @@ iframe {
   font-weight: bold;
 }
 
+.rev {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  width: 95%;
+  border-radius: 10px 10px 0px 0px;
+  background-color: rgba(3, 150, 250, 1.5);;
+}
+

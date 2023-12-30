@@ -12,4 +12,5 @@ export interface Trip {
   Image2: string
   Image3: string
   Rating: number
+  Map: string,
 }

@@ -19,7 +19,8 @@ export class AddTripComponent implements OnInit {
     Price: '',
     PlacesTotal: '',
     PlacesReserved: '',
-    Description: ''
+    Description: '',
+    Map: ''
   }
 
   private validationMessages = {
@@ -67,6 +68,7 @@ export class AddTripComponent implements OnInit {
       PlacesTotal: new FormControl('', [Validators.required, Validators.min(1)]),
       PlacesReserved: new FormControl('0', Validators.min(0)),
       Description: new FormControl('', [Validators.required, Validators.minLength(30), Validators.maxLength(300)]),
+      Map: new FormControl('')
     })
 
     this.AddTripForm.valueChanges.subscribe((value) => {

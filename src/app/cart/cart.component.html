@@ -1,0 +1,17 @@
+<div class="cart">
+  <h1>Your cart</h1>
+  <div *ngFor="let trip of cartItems"  style="display: flex; margin-top: 20px;">
+    <div class="trip" [routerLink]="['/trip-details', trip.TripID]">
+      <span class="name">{{ trip.Name }}</span>
+      <span class="country">{{ trip.Country }}</span>
+      <span class="price">$ {{ trip.Price }}</span>
+      <span class="date">{{ trip.StartDate }}</span>
+    </div>
+
+    <button class="amountbutton" (click)="changeAmount(trip.CartItemID, -1)">-</button>
+    <span class="amount">{{ trip.Amount }}</span>
+    <button class="amountbutton" (click)="changeAmount(trip.CartItemID, 1)">+</button>
+  </div>
+  <h2>Total Price: {{ getTotalPrice() }}</h2>
+  <button class="buy" [disabled]="!cartItems.length" (click)="buy()">Buy</button>
+</div>
