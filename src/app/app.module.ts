@@ -14,11 +14,14 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from "@angular/fire/compat";
 import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { SafePipe } from './safe.pipe';
-
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 
 @NgModule({
   declarations: [
-    AppComponent, TripsComponent, LandingPageComponent, AddTripComponent, CartComponent, HistoryComponent, TripDetailsComponent, SafePipe
+    AppComponent, TripsComponent, LandingPageComponent, AddTripComponent, CartComponent, HistoryComponent, TripDetailsComponent, SafePipe, LoginComponent, SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,8 @@ import { SafePipe } from './safe.pipe';
     ReactiveFormsModule,
     FilterTripsComponent,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,15 +13,38 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/add-new-trip">Add new trip</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/cart">Cart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/history">Orders history</a>
-        </li>
+
+         <div *ngIf="user$ | async as user; else showLogin">
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/add-new-trip">Add new trip</a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/cart">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/history">Orders history</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signout" (click)="signOut()">Sign out</a>
+          </li>
+
+
+         </div>
+
+        <ng-template #showLogin>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Sign up</a>
+          </li>
+        </ng-template>
+
+
+
       </ul>
     </div>
   </nav>
