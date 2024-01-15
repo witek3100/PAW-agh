@@ -1,7 +1,12 @@
 import {Component, inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import {Auth, createUserWithEmailAndPassword, getAuth } from "@angular/fire/auth";
+import {Auth, createUserWithEmailAndPassword, getAuth, updateProfile } from "@angular/fire/auth";
 import {Router} from "@angular/router";
+import firebase from "firebase/compat";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {CartItem} from "../cart-item.model";
+import {UserData} from "../user.model";
+
 
 @Component({
   selector: 'app-signup',
@@ -11,8 +16,9 @@ import {Router} from "@angular/router";
 export class SignupComponent {
   signupForm: FormGroup;
   private auth: Auth = inject(Auth);
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, public router: Router) {
+  constructor(private db: AngularFirestore, private fb: FormBuilder, public router: Router) {
     this.signupForm = this.fb.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -20,8 +26,8 @@ export class SignupComponent {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required]
     }, {
-      validator: this.passwordMatchValidator
-    });
+      validator: [this.passwordMatchValidator]
+    })
   }
 
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
@@ -34,19 +40,46 @@ export class SignupComponent {
 
     return null;
   }
-  onSubmit() {
+
+  async onSubmit() {
+    const userData = this.signupForm.value;
 
     if (this.signupForm.valid) {
-      const userData = this.signupForm.value;
+
       createUserWithEmailAndPassword(this.auth, userData.email, userData.password)
-          .then((userCredential) => {
-            this.router.navigate([''])
+        .then((userCredential) => {
+
+          this.db.collection('Users').doc(userCredential.user.uid).set({
+            'FirstName': userData.first_name,
+            'LastName': userData.last_name,
+            'IsVerified': true,
+            'IsManager': false,
+            'IsAdmin': false
           })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
-        }
-      }
+
+          this.router.navigate(['']);
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(error)
+          this.handleSignUpError(error);
+        });
+
+    }
+  }
+
+
+  private handleSignUpError(error: any) {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        this.errorMessage = 'This email address is assigned to another account.';
+        break;
+      case 'nickname-in-use':
+        this.errorMessage = 'This nickname is assigned to another account'
+        break;
+    }
+  }
 
 }

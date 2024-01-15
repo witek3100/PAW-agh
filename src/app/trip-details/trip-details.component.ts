@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {Trip} from "../trip.model";
@@ -6,6 +6,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Review} from "../review.model";
 import { DomSanitizer } from '@angular/platform-browser';
 import {CartItem} from "../cart-item.model";
+import {Auth, User, user} from "@angular/fire/auth";
+import {UserData} from "../user.model";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -19,6 +22,10 @@ export class TripDetailsComponent implements OnInit {
   trip: Trip;
   public AddReviewForm: FormGroup;
   reviews: Review[] = [];
+  private auth: Auth = inject(Auth);
+  user$ = user(this.auth);
+  userSubscription: Subscription
+  userID: string
 
   formErrors = {
     Nick: '',
@@ -39,7 +46,11 @@ export class TripDetailsComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private db: AngularFirestore, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {}
+  constructor(private fb: FormBuilder, private db: AngularFirestore, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
+    this.userSubscription = this.user$.subscribe((user: User | null) => {
+      this.userID = user?.uid as string
+    })
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -132,7 +143,7 @@ export class TripDetailsComponent implements OnInit {
       } else {
         this.db.collection('CartItems').add({
           'TripID': id,
-          'UserID': '',
+          'UserID': this.userID,
           'Amount': 1,
           'Active': true,
         })

@@ -21,7 +21,16 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 
 @NgModule({
   declarations: [
-    AppComponent, TripsComponent, LandingPageComponent, AddTripComponent, CartComponent, HistoryComponent, TripDetailsComponent, SafePipe, LoginComponent, SignupComponent
+    AppComponent,
+    TripsComponent,
+    LandingPageComponent,
+    AddTripComponent,
+    CartComponent,
+    HistoryComponent,
+    TripDetailsComponent,
+    SafePipe,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

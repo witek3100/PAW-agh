@@ -14,7 +14,9 @@ export class CartComponent implements OnInit {
 
   public cartItems: any[] = [];
 
-  public constructor(private db: AngularFirestore, private router: Router) {}
+  public constructor(private db: AngularFirestore, private router: Router) {
+
+  }
 
   ngOnInit(): void {
     this.db.collection('CartItems').get().subscribe((ss) => {

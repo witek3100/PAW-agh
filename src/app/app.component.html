@@ -12,14 +12,13 @@
           <a class="nav-link" routerLink="/trips">Our offer</a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto" *ngIf="user$ | async as user; else showLogin">
 
-         <div *ngIf="user$ | async as user; else showLogin">
-
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/add-new-trip">Add new trip</a>
-          </li>
-
+          <div *ngIf="userData.IsAdmin || userData.IsManager">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/add-new-trip">Admin view</a>
+            </li>
+          </div>
 
           <li class="nav-item">
             <a class="nav-link" routerLink="/cart">Cart</a>
@@ -30,22 +29,22 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/signout" (click)="signOut()">Sign out</a>
           </li>
+          <span style="color: #254621; font-weight: bold; margin-left: 40px; margin-top: 8px;">
+            {{ user.email }}
+          </span>
+      </ul>
 
-
-         </div>
-
-        <ng-template #showLogin>
+      <ng-template #showLogin>
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/signup">Sign up</a>
           </li>
-        </ng-template>
+        </ul>
+      </ng-template>
 
-
-
-      </ul>
     </div>
   </nav>
 

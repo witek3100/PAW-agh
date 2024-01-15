@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'add-new-trip', component: AddTripComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
-  { path: 'trip-details/:id', component: TripDetailsComponent },
+  { path: 'trip-details/:id', component: TripDetailsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent }
 ];

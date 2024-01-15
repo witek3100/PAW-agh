@@ -14,3 +14,8 @@ nav li {
 nav li:hover {
   transform: scale(1.4);
 }
+
+.foruser {
+  display: flex;
+  flex-direction: column;
+}
