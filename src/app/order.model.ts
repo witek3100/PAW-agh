@@ -1,5 +1,7 @@
+import {Timestamp} from "@firebase/firestore-types";
 
 export interface Order {
   CartItems: string[],
-  Date: Date
+  Date: Timestamp,
+  UserID: string
 }

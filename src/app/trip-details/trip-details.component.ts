@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {Trip} from "../trip.model";
@@ -9,6 +9,10 @@ import {CartItem} from "../cart-item.model";
 import {Auth, User, user} from "@angular/fire/auth";
 import {UserData} from "../user.model";
 import {Subscription} from "rxjs";
+import {UserService} from "../user.service";
+import {Order} from "../order.model";
+import { Location } from '@angular/common';
+import { NgZone } from '@angular/core';
 
 
 @Component({
@@ -22,22 +26,18 @@ export class TripDetailsComponent implements OnInit {
   trip: Trip;
   public AddReviewForm: FormGroup;
   reviews: Review[] = [];
-  private auth: Auth = inject(Auth);
-  user$ = user(this.auth);
-  userSubscription: Subscription
-  userID: string
+  userID: string;
+  isVerified: boolean;
+  isManager: boolean;
+  hasOrdersWithTrip: boolean
 
   formErrors = {
-    Nick: '',
     Title: '',
     Content: '',
     Date: ''
   }
 
   private validationMessages = {
-    Nick: {
-      required: 'Nick is required'
-    },
     Title: {
       required: 'Title is required'
     },
@@ -46,8 +46,16 @@ export class TripDetailsComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private db: AngularFirestore, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
-    this.userSubscription = this.user$.subscribe((user: User | null) => {
+  constructor(
+    private fb: FormBuilder,
+    private db: AngularFirestore,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    protected userService: UserService,
+    private location: Location,
+  ) {
+    this.userService.user$.subscribe((user: User | null) => {
       this.userID = user?.uid as string
     })
   }
@@ -57,12 +65,33 @@ export class TripDetailsComponent implements OnInit {
       this.id = params['id'];
     })
 
+
+    this.userService.user$.subscribe((user: User | null) => {
+      this.userID = user?.uid as string;
+
+      this.db.collection('Users').doc(this.userID).get().subscribe(ss => {
+        var userData = ss.data() as UserData;
+        this.isVerified = userData.IsVerified;
+        this.isManager = userData.IsManager;
+
+        this.db.collection('CartItems').get().subscribe(ss2 => {
+          ss2.docs.forEach((doc2) => {
+            var cartitem = doc2.data() as CartItem
+
+            if (cartitem.UserID === this.userID && !cartitem.Active && cartitem.TripID === this.id) {
+              this.hasOrdersWithTrip = true
+            }
+          })
+        })
+
+      });
+    });
+
     this.db.collection('Trips').doc(this.id).get().subscribe(ss => {
       this.trip = ss.data() as Trip;
     })
 
     this.AddReviewForm = this.fb.group({
-      Nick: new FormControl('', Validators.required),
       Title: new FormControl('', Validators.required),
       Content: new FormControl('', Validators.required),
       Date: new FormControl('')
@@ -71,7 +100,6 @@ export class TripDetailsComponent implements OnInit {
     this.AddReviewForm.valueChanges.subscribe((value) => {
       this.onControlValueChanged();
     });
-
     this.onControlValueChanged();
 
     this.db.collection('Reviews').get().subscribe((ss) => {
@@ -106,17 +134,8 @@ export class TripDetailsComponent implements OnInit {
       const formData = { ...this.AddReviewForm.value }
       Object.assign(formData, {'TripID': this.id})
       this.db.collection('Reviews').add({ ...formData }).then(() => {
-        location.reload();
+        window.location.reload()
       })
-    }
-  }
-
-  deleteTrip(id: string): void {
-    if (confirm('Are you sure you want to delete this trip?')) {
-      this.db.collection('Trips').doc(id).delete().then(
-        () => {
-          this.router.navigate(['/trips'])
-        });
     }
   }
 
@@ -129,7 +148,7 @@ export class TripDetailsComponent implements OnInit {
     this.db.collection('CartItems').get().subscribe((ss) => {
       ss.docs.forEach((doc) => {
         const item = doc.data() as CartItem;
-        if (item.TripID === id && item.Active) {
+        if (item.TripID === id && item.Active && item.UserID === this.userID) {
           cartid = doc.id;
           exists = true
           new_amount = item.Amount + 1
@@ -151,6 +170,10 @@ export class TripDetailsComponent implements OnInit {
 
       this.router.navigate(['/cart'])
     })
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 

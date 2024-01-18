@@ -1,66 +1,66 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="card">
+      <div class="card" style="background-color: rgba(3, 160, 250, 0.7); color: white;">
         <div class="card-body">
-          <h3 class="card-title text-center">ADD NEW TRIP</h3>
-          <form [formGroup]="AddTripForm" (ngSubmit)="onSubmit()">
+          <h3 class="card-title text-center">UPDATE TRIP </h3>
+          <form [formGroup]="UpdateTripForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="name" class="form-label">Name:</label>
-              <input type="text" class="form-control" id="name" formControlName="Name">
+              <input type="text" class="form-control" id="name" formControlName="Name" placeholder="{{ trip.Name }}">
               <span class="error" *ngIf="formErrors.Name">{{ formErrors.Name }}</span>
             </div>
 
             <div class="mb-3">
               <label for="country" class="form-label">Country:</label>
-              <input type="text" class="form-control" id="country" formControlName="Country">
+              <input type="text" class="form-control" id="country" formControlName="Country" placeholder="{{ trip.Country }}">
               <span class="error" *ngIf="formErrors.Country">{{ formErrors.Country }}</span>
             </div>
 
             <div class="mb-3">
               <label for="start-date" class="form-label">Start date:</label>
-              <input type="date" class="form-control" id="start-date" formControlName="StartDate">
+              <input type="date" class="form-control" id="start-date" formControlName="StartDate" placeholder="{{ trip.StartDate }}">
               <span class="error" *ngIf="formErrors.startDate">{{ formErrors.startDate }}</span>
             </div>
 
             <div class="mb-3">
               <label for="end-date" class="form-label">End date:</label>
-              <input type="date" class="form-control" id="end-date" formControlName="EndDate">
+              <input type="date" class="form-control" id="end-date" formControlName="EndDate" placeholder="{{ trip.EndDate }}">
               <span class="error" *ngIf="formErrors.endDate">{{ formErrors.endDate }}</span>
             </div>
 
             <div class="mb-3">
               <label for="price" class="form-label">Price:</label>
-              <input type="number" class="form-control" id="price" formControlName="Price">
+              <input type="number" class="form-control" id="price" formControlName="Price" placeholder="{{ trip.Price }}">
               <span class="error" *ngIf="formErrors.Price">{{ formErrors.Price }}</span>
             </div>
 
             <div class="mb-3">
               <label for="places-total" class="form-label">Places total:</label>
-              <input type="number" class="form-control" id="places-total" formControlName="PlacesTotal">
+              <input type="number" class="form-control" id="places-total" formControlName="PlacesTotal" placeholder="{{ trip.PlacesTotal }}">
               <span class="error" *ngIf="formErrors.PlacesTotal">{{ formErrors.PlacesTotal }}</span>
             </div>
 
             <div class="mb-3">
               <label for="places-reserved" class="form-label">Places reserved:</label>
-              <input type="number" class="form-control" id="places-reserved" formControlName="PlacesReserved">
+              <input type="number" class="form-control" id="places-reserved" formControlName="PlacesReserved" placeholder="{{ trip.PlacesReserved }}">
               <span class="error" *ngIf="formErrors.PlacesReserved">{{ formErrors.PlacesReserved }}</span>
             </div>
 
             <div class="mb-3">
               <label for="desc" class="form-label">Description:</label>
-              <input type="text" class="form-control" id="desc" formControlName="Description" placeholder="123123123">
+              <input type="text" class="form-control" id="desc" formControlName="Description" placeholder="{{ trip.Description }}">
               <span class="error" *ngIf="formErrors.Description">{{ formErrors.Description }}</span>
             </div>
 
             <div class="mb-3">
               <label for="map" class="form-label">Map link: </label>
-              <input type="text" class="form-control" id="map" formControlName="Description">
+              <input type="text" class="form-control" id="map" formControlName="Description" placeholder="{{ trip.Map }}">
               <span class="error" *ngIf="formErrors.Map">{{ formErrors.Map }}</span>
             </div>
 
             <div class="text-center">
-              <button type="submit" class="btn btn-primary" [disabled]="!AddTripForm.valid">Add</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!UpdateTripForm.valid">Update</button>
             </div>
           </form>
         </div>
@@ -68,4 +68,5 @@
     </div>
   </div>
 </div>
+
 

@@ -1,15 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TripService} from "../trip.service";
+import {Trip} from "../trip.model";
 
 @Component({
-  selector: 'app-add-trip',
-  templateUrl: './add-trip.component.html',
-  styleUrls: ['./add-trip.component.css']
+  selector: 'update-trip',
+  templateUrl: './update-trip.component.html',
+  styleUrls: ['./update-trip.component.css']
 })
-export class AddTripComponent implements OnInit {
-  public AddTripForm: FormGroup;
+export class UpdateTripComponent implements OnInit {
+  public UpdateTripForm: FormGroup;
+  id: string;
+  trip: Trip;
 
   formErrors = {
     Name: '',
@@ -54,23 +58,31 @@ export class AddTripComponent implements OnInit {
     }
   }
 
-  public constructor(private db: AngularFirestore, private fb: FormBuilder, private router: Router) {}
+  public constructor(private db: AngularFirestore, private fb: FormBuilder, private route: ActivatedRoute, private tripService: TripService) {}
 
   public ngOnInit(): void {
 
-    this.AddTripForm = this.fb.group({
-      Name: new FormControl('', Validators.minLength(5)),
-      Country: new FormControl('', Validators.required),
-      StartDate: new FormControl('', Validators.required),
-      EndDate: new FormControl('', Validators.required),
-      Price: new FormControl('', [Validators.required, Validators.min(0)]),
-      PlacesTotal: new FormControl('', [Validators.required, Validators.min(1)]),
-      PlacesReserved: new FormControl('0', Validators.min(0)),
-      Description: new FormControl('', [Validators.required, Validators.minLength(30), Validators.maxLength(300)]),
-      Map: new FormControl('')
+    this.UpdateTripForm = this.fb.group({
+      Name: new FormControl(this.trip.Name, Validators.minLength(5)),
+      Country: new FormControl(this.trip.Country, Validators.required),
+      StartDate: new FormControl(this.trip.StartDate, Validators.required),
+      EndDate: new FormControl(this.trip.EndDate, Validators.required),
+      Price: new FormControl(this.trip.Price, [Validators.required, Validators.min(0)]),
+      PlacesTotal: new FormControl(this.trip.PlacesTotal, [Validators.required, Validators.min(1)]),
+      PlacesReserved: new FormControl(this.trip.PlacesReserved, Validators.min(0)),
+      Description: new FormControl(this.trip.Description, [Validators.required, Validators.minLength(30), Validators.maxLength(300)]),
+      Map: new FormControl(this.trip.Map)
     })
 
-    this.AddTripForm.valueChanges.subscribe((value) => {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+    })
+
+    this.db.collection('Trips').doc(this.id).get().subscribe(ss => {
+      this.trip = ss.data() as Trip;
+    })
+
+    this.UpdateTripForm.valueChanges.subscribe((value) => {
       this.onControlValueChanged();
     });
 
@@ -78,7 +90,7 @@ export class AddTripComponent implements OnInit {
   }
 
   onControlValueChanged() {
-    const form = this.AddTripForm;
+    const form = this.UpdateTripForm;
 
     for (let field in this.formErrors) {
       (this.formErrors as any)[field] = '';
@@ -94,11 +106,10 @@ export class AddTripComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.AddTripForm.valid) {
-      const formData = { ...this.AddTripForm.value };
-      this.db.collection('Trips').add({ ...formData }).then(() => {
-        this.router.navigate(['/admin-panel']);
-      });
+    if (this.UpdateTripForm.valid) {
+      const formData = { ...this.UpdateTripForm.value };
+      console.log(formData)
     }
   }
 }
+

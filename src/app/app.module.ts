@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from "@angular/common/http";
 import { TripsComponent } from "./trips/trips.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FilterTripsComponent } from "./filter-trips/filter-trips.component";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AddTripComponent } from './add-trip/add-trip.component';
@@ -18,6 +18,9 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { UpdateTripComponent } from './update-trip/update-trip.component';
+import { UserManagmentComponent } from './user-managment/user-managment.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
     TripDetailsComponent,
     SafePipe,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AdminPanelComponent,
+    UpdateTripComponent,
+    UserManagmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +47,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,25 @@
-<div class="history">
-  <h1>Your previous reservations</h1>
-  <div class="order" *ngFor="let order of orders">
-    <span class="orderid">Order ID: {{ order.ID }} <span style="float: right">{{ order.Date }}</span></span>
-    <div style="margin-top: 10px;">Reserved trips:</div>
-    <div *ngFor="let trip of order.Trips">
-      <div class="trip" [routerLink]="['/trip-details', trip]">Trip ID: {{ trip }}</div>
+<div class="container mt-5">
+  <div class="history">
+    <h1>Your previous reservations</h1>
+    <div class="order" *ngFor="let order of orders">
+      <div class="card mb-4" style="background-color: rgba(0, 180, 200, 1);">
+        <div class="card-header">
+          <span class="orderid">Order ID: {{ order.ID }} <span class="float-right"><br>{{ order.Date | date:'yyyy-MM-dd HH:mm:ss'}}</span></span>
+        </div>
+        <div class="card-body" style="background-color: rgba(0, 180, 200, 1);">
+          <h5 class="card-title">Reserved trips:</h5>
+          <div *ngFor="let trip of order.Trips">
+            <div class="card mb-2" style="background-color: rgba(0, 180, 200, 1);" >
+              <div class="card-body" style="background-color: rgba(0, 180, 200, 1);">
+                <h6 class="card-subtitle mb-2 text-muted">Trip ID: {{ trip.id }}</h6>
+                <div>Trip name: {{ trip.tripName }}</div>
+                <div>Amount: {{ trip.amount }}</div>
+                <a [routerLink]="['/trip-details', trip.id]" class="btn btn-primary mt-2">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

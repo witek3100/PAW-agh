@@ -4,6 +4,9 @@ import {CartItem} from "../cart-item.model";
 import {Trip} from "../trip.model";
 import {Router} from "@angular/router";
 import {flush} from "@angular/core/testing";
+import {UserService} from "../user.service";
+import {User} from "@angular/fire/auth";
+import { Timestamp } from '@firebase/firestore-types';
 
 @Component({
   selector: 'app-cart',
@@ -13,17 +16,22 @@ import {flush} from "@angular/core/testing";
 export class CartComponent implements OnInit {
 
   public cartItems: any[] = [];
+  public userID: string
 
-  public constructor(private db: AngularFirestore, private router: Router) {
-
+  public constructor(private db: AngularFirestore, private router: Router, protected userService: UserService) {
+    this.userService.user$.subscribe((user: User | null) => {
+      this.userID = user?.uid as string
+    })
   }
+
+
 
   ngOnInit(): void {
     this.db.collection('CartItems').get().subscribe((ss) => {
       ss.docs.forEach((doc) => {
         const cartItem = doc.data() as CartItem;
 
-        if (cartItem.Active) {
+        if (cartItem.Active && cartItem.UserID === this.userID) {
           this.db.collection('Trips').get().subscribe((ss) => {
             ss.docs.forEach((doct) => {
               const trip = doct.data() as Trip;
@@ -76,7 +84,8 @@ export class CartComponent implements OnInit {
       var ids = this.cartItems.map((item) => item.CartItemID)
       this.db.collection('OrdersHistory').add({
         'CartItems': ids,
-        'Date': new Date()
+        'Date': new Date(),
+        'UserID': this.userID
       })
 
       for (var i = 0; i < ids.length; i++) {

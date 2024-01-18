@@ -14,9 +14,9 @@
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="user$ | async as user; else showLogin">
 
-          <div *ngIf="userData.IsAdmin || userData.IsManager">
+          <div *ngIf=" userService.userData.IsAdmin || userService.userData.IsManager">
             <li class="nav-item">
-              <a class="nav-link" routerLink="/add-new-trip">Admin view</a>
+              <a class="nav-link" routerLink="/admin-panel">Admin panel</a>
             </li>
           </div>
 
